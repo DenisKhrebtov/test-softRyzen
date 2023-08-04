@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
+import DEVICE from '../../constants/mediaSizes';
 
 export const StyledBackLink = styled(Link)`
   display: flex;
@@ -10,6 +11,12 @@ export const StyledBackLink = styled(Link)`
   font-size: 14px;
   font-weight: 500;
   transition: opacity 300ms ease-in-out;
+
+  margin-bottom: 24px;
+
+  @media ${DEVICE.desktop} {
+    margin-bottom: 17px;
+  }
 
   &:hover,
   &:focus {

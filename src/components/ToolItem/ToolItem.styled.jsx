@@ -27,7 +27,7 @@ export const ToolButton = styled.button`
     padding: ${p => (p.py ? '16px 24px' : '16px')};
   }
 
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
   box-shadow: ${p => p.theme.boxShadow};
 
   border-bottom-left-radius: ${p => (p.isOpen ? '0px' : '8px')};
@@ -72,7 +72,7 @@ export const DropDownList = styled.ul`
   left: 0;
 
   li {
-    background-color: #ffffff;
+    background-color: ${p => p.theme.white};
     border-bottom: 1px solid ${p => p.theme.divider};
 
     color: ${p => p.theme.divider};

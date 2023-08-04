@@ -7,6 +7,8 @@ export const StyledContainer = styled.div`
   padding: ${p => (p.pt ? '44px' : '0px')} 24px ${p => (p.pb ? '50px' : '0px')};
   min-width: 320px;
 
+  height: ${p => p.height};
+
   @media ${DEVICE.tablet} {
     padding: ${p => (p.pt ? '40px' : '0px')} 40px ${p => (p.pb ? '125px' : '0px')};
     max-width: 768px;

@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import DEVICE from '../../constants/mediaSizes';
 
 export const InfoWrapper = styled.div`
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
   padding: 16px 16px 24px;
 
   display: flex;
@@ -16,7 +16,7 @@ export const InfoWrapper = styled.div`
   p {
     font-size: 14px;
     line-height: 1.43;
-    color: #49454f;
+    color: ${p => p.theme.description};
     height: 76px;
   }
 `;
@@ -44,7 +44,7 @@ export const Overlay = styled.div`
 export const ReadMoreLink = styled(Link)`
   padding: 10px 24px;
   background-color: ${p => p.theme.accent};
-  color: #ffffff;
+  color: ${p => p.theme.white};
   border-radius: 8px;
 
   visibility: hidden;
@@ -67,7 +67,7 @@ export const Item = styled.li`
   box-shadow: ${p => p.theme.boxShadow};
   overflow: hidden;
 
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
 
   width: 271px;
   height: 480px;
@@ -107,7 +107,7 @@ export const TagsWrapper = styled.div`
 
 export const Tag = styled.span`
   padding: 6px 12px;
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
   border-radius: 8px;
   font-size: 14px;
   font-weight: 500;
@@ -115,9 +115,9 @@ export const Tag = styled.span`
   color: ${p => p.theme.accent};
 
   color: ${p => {
-    if (p.priority === 'High') return p.theme.hight;
-    if (p.priority === 'Medium') return p.theme.medium;
-    if (p.priority === 'Low') return p.theme.low;
+    if (p.priority) {
+      return p.theme[p.priority];
+    }
     return p.theme.accent;
   }};
 `;

@@ -17,7 +17,7 @@ const EventItem = ({ id, title, location, description, date, time, image, priori
       <ImageWrapper>
         <TagsWrapper>
           <Tag>{category}</Tag>
-          <Tag priority={priority}>{priority}</Tag>
+          <Tag priority={priority.toLowerCase()}>{priority}</Tag>
         </TagsWrapper>
         <img src={image} alt={title} />
         <Overlay>

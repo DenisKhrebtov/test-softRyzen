@@ -2,7 +2,7 @@ import { styled } from 'styled-components';
 
 export const LangSelect = styled.div`
   position: relative;
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
   box-shadow: ${p => p.theme.boxShadow};
   padding: 12px 6px 12px 12px;
   border-radius: 8px;
@@ -38,7 +38,7 @@ export const DropDownList = styled.ul`
 
   width: 69px;
 
-  background-color: #ffffff;
+  background-color: ${p => p.theme.white};
   box-shadow: 2px 4px 9px 0px rgba(166, 141, 174, 0.28);
 
   display: flex;

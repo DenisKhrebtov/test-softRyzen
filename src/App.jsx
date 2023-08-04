@@ -5,7 +5,7 @@ import { Suspense, lazy } from 'react';
 
 const Home = lazy(() => import('./pages/Home'));
 const CreateEvent = lazy(() => import('./pages/CreateEvent'));
-const EventDetails = lazy(() => import('./pages/EventDetails.jsx'));
+const EventDetail = lazy(() => import('./pages/EventDetail.jsx'));
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="create" element={<CreateEvent />} />
-          <Route path="event/:eventId" element={<EventDetails />} />
+          <Route path="event/:eventId" element={<EventDetail />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Route>
       </Routes>

@@ -41,7 +41,7 @@ export const CreateLink = styled(Link)`
       font-size: 16px;
       font-weight: 500;
 
-      color: #ffffff;
+      color: ${p => p.theme.white};
     }
   }
 `;
