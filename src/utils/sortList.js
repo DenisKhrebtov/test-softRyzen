@@ -4,7 +4,6 @@ export const sortList = (type, icon, array) => {
   console.log(array);
 
   if (type === 'by A-Z' || type === 'by Z-A') {
-    console.log('aaa');
     icon === 'up'
       ? (sortedArray = [...array].sort((a, b) => a.title.localeCompare(b.title)))
       : (sortedArray = [...array].sort((a, b) => b.title.localeCompare(a.title)));

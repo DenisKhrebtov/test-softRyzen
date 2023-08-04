@@ -3,13 +3,12 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import * as SWMIconPack from 'react-swm-icon-pack';
+
 import ToolItem from '../ToolItem/ToolItem';
 
 import { ToolsList, CreateLink } from './HomeTools.styled';
-import { sortList } from '../../utils/sortList';
-import { filterByCategory } from '../../utils/filterByCategory';
 
-const HomeTools = ({ setData, data }) => {
+const HomeTools = ({ getCategory, getSortType }) => {
   const [category, setCategory] = useState('');
   const [categoryListIsOpen, setCategoryListIsOpen] = useState(false);
   const [sort, setSort] = useState('');
@@ -18,15 +17,12 @@ const HomeTools = ({ setData, data }) => {
   const selectCategory = selectedCategory => {
     setCategory(selectedCategory);
     setCategoryListIsOpen(false);
-
-    const filteredArr = filterByCategory(selectedCategory, data);
-    setData(filteredArr);
+    getCategory(selectedCategory);
   };
 
   const selectSortType = (sortType, icon) => {
     setSort(sortType);
-    const newArr = sortList(sortType, icon, data);
-    setData(newArr);
+    getSortType(sortType, icon);
     setSortListIsOpen(false);
   };
 
@@ -65,4 +61,6 @@ export default HomeTools;
 HomeTools.propTypes = {
   data: PropTypes.array,
   setData: PropTypes.func,
+  getCategory: PropTypes.func,
+  getSortType: PropTypes.func,
 };

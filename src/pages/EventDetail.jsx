@@ -3,6 +3,8 @@ import EventDetailItem from '../components/EventDetailItem/EventDetailItem';
 import GoBackLink from '../components/GoBackLink/GoBackLink';
 import Title from '../components/ui/Title/Title';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getEventById } from '../api/api';
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -11,15 +13,33 @@ export const Wrapper = styled.div`
 
 const EventDetail = () => {
   const { eventId } = useParams();
+  const [event, setEvent] = useState(null);
 
-  console.log(eventId);
+  useEffect(() => {
+    getEventById(eventId).then(setEvent);
+  }, [eventId]);
+
   return (
     <>
       <GoBackLink />
-      <Wrapper>
-        <Title>Gallery</Title>
-        <EventDetailItem />
-      </Wrapper>
+
+      {event ? (
+        <Wrapper>
+          <Title>{event.title}</Title>
+          <EventDetailItem
+            id={event.id}
+            title={event.title}
+            description={event.description}
+            date={event.date}
+            time={event.time}
+            location={event.location}
+            priority={event.priority}
+            category={event.category}
+          />
+        </Wrapper>
+      ) : (
+        <p>Loading...</p>
+      )}
     </>
   );
 };

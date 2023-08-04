@@ -40,7 +40,7 @@ const EventItem = ({ id, title, location, description, date, time, image, priori
 export default EventItem;
 
 EventItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   location: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,

@@ -8,7 +8,7 @@ const Layout = () => {
     <>
       <Header />
       <Background>
-        <Container paddingTop="true" paddingBottom="true" height="100vh">
+        <Container paddingTop="true" paddingBottom="true" height="100%">
           <Outlet />
         </Container>
       </Background>

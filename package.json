@@ -1,6 +1,5 @@
 {
   "name": "test-softryzen",
-  "version": "0.1.0",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,10 +12,12 @@
   "dependencies": {
     "@fontsource/alata": "^5.0.5",
     "@fontsource/poppins": "^5.0.5",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.14.2",
     "react-swm-icon-pack": "^1.0.14",
+    "react-time-picker": "^6.5.0",
     "react-use": "^17.4.0",
     "styled-components": "^6.0.5"
   },
