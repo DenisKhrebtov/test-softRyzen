@@ -5,7 +5,7 @@ import Title from '../components/ui/Title/Title';
 const CreateEvent = () => {
   return (
     <div>
-      <GoBackLink />
+      <GoBackLink to="/" />
       <Title>Create new event</Title>
       <Form />
     </div>

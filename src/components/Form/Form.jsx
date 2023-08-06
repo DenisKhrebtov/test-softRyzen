@@ -1,5 +1,7 @@
 import * as SWMIconPack from 'react-swm-icon-pack';
 
+import { format } from 'date-fns';
+
 import { eventCategories } from '../../constants/eventCategories';
 import priorityTypes from '../../constants/priorityTypes';
 import {
@@ -14,12 +16,16 @@ import {
 // import TimePicker from 'react-time-picker';
 import { useState } from 'react';
 
+import Calendar from '../ui/Calendar/Calendar';
+
 const Form = () => {
   const [categoryListIsOpen, setCategoryListIsOpen] = useState(false);
   const [priorityListIsOpen, setPriorityListIsOpen] = useState(false);
+  const [calendarIsOpen, setCalendarIsOpen] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState('');
   const [selectedPriority, setSelectedPriority] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
 
   const onCategory = category => {
     setSelectedCategory(category);
@@ -52,13 +58,33 @@ const Form = () => {
         <ErrorMessage>Invalid input</ErrorMessage>
       </InputWrapper>
 
-      <InputWrapper>
-        <label htmlFor="date">
-          Select date
-          <input id="date" name="date" type="date" onChange={e => console.log(e.target.value)} />
-        </label>
-      </InputWrapper>
+      <div>
+        <label htmlFor="date">Select date</label>
+        <InputWrapper>
+          <input
+            id="date"
+            name="date"
+            type="button"
+            value={selectedDate ? format(selectedDate, 'dd/MM/yyyy') : 'Select'}
+            onClick={() => setCalendarIsOpen(prev => !prev)}
+          />
 
+          <ToggleButton type="button" onClick={() => setCalendarIsOpen(prev => !prev)}>
+            {categoryListIsOpen ? (
+              <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
+            ) : (
+              <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+            )}
+          </ToggleButton>
+          {calendarIsOpen && (
+            <Calendar
+              onClose={setCalendarIsOpen}
+              setSelectedDate={setSelectedDate}
+              selectedDate={selectedDate}
+            />
+          )}
+        </InputWrapper>
+      </div>
       <InputWrapper>
         <label htmlFor="time">
           Select date

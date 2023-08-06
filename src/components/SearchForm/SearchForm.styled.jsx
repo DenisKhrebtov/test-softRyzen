@@ -1,11 +1,14 @@
 import { styled } from 'styled-components';
 import DEVICE from '../../constants/mediaSizes';
 
-export const StyledForm = styled.form`
+export const StyledInput = styled.div`
   display: flex;
   align-items: center;
+  gap: 12px;
 
   padding: 12px;
+
+  position: relative;
 
   border-radius: 8px;
   box-shadow: ${p => p.theme.boxShadow};
@@ -16,11 +19,6 @@ export const StyledForm = styled.form`
 
   @media ${DEVICE.desktop} {
     width: 410px;
-  }
-
-  button {
-    display: flex;
-    margin-right: 12px;
   }
 
   input {
@@ -40,4 +38,10 @@ export const StyledForm = styled.form`
       font-weight: 300;
     }
   }
+`;
+
+export const CleanButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
 `;

@@ -38,7 +38,7 @@ const EventDetailItem = ({ id, title, description, category, priority, location,
           </Tag>
         </TagList>
         <ButtonWrapper>
-          <EditLink>Edit</EditLink>
+          <EditLink to={`/event/edit/${id}`}>Edit</EditLink>
           <DeleteButton onClick={onDelete}>Delete event</DeleteButton>
         </ButtonWrapper>
       </InfoWrapper>

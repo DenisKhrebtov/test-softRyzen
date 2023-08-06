@@ -75,8 +75,6 @@ export const DropDownList = styled.ul`
     background-color: ${p => p.theme.white};
     border-bottom: 1px solid ${p => p.theme.divider};
 
-    color: ${p => p.theme.divider};
-
     &:first-child {
       border-top: 1px solid ${p => p.theme.divider};
     }
@@ -84,9 +82,11 @@ export const DropDownList = styled.ul`
     &:last-child {
       border-bottom-left-radius: 8px;
       border-bottom-right-radius: 8px;
+      border-bottom: none;
     }
 
     button {
+      color: ${p => p.theme.divider};
       transition: color 300ms ease-in-out;
       display: block;
       padding: 12px 24px 8px;
@@ -97,6 +97,7 @@ export const DropDownList = styled.ul`
       align-items: center;
 
       svg g path {
+        stroke: ${p => p.theme.divider};
         transition: stroke 300ms ease-in-out;
       }
     }

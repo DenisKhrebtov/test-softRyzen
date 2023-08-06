@@ -17,10 +17,12 @@ export const StyledForm = styled.form`
   @media ${DEVICE.tablet} {
     padding: 40px 24px;
 
-    /* flex-direction: row; */
+    height: 656px;
+
     flex-wrap: wrap;
-    /* justify-content: space-between; */
-    gap: 24px;
+
+    row-gap: 24px;
+    column-gap: 20px;
 
     & > div {
       width: 50%;
@@ -28,7 +30,6 @@ export const StyledForm = styled.form`
   }
 
   @media ${DEVICE.desktop} {
-    margin-top: 25px;
   }
 
   & label {

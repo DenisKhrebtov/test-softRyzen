@@ -21,7 +21,7 @@ const EventDetail = () => {
 
   return (
     <>
-      <GoBackLink />
+      <GoBackLink to="/" />
 
       {event ? (
         <Wrapper>

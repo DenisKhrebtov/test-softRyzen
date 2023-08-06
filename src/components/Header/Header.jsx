@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { useMedia } from 'react-use';
 
 import { StyledHeader, Wrapper, Logo, TabletContent } from './Header.styled';
@@ -6,7 +8,7 @@ import CustomSelect from '../ui/CustomSelect/CustomSelect';
 import SearchForm from '../SearchForm/SearchForm';
 import lang from '../../constants/languages';
 
-const Header = () => {
+const Header = ({ events, setFormatList }) => {
   const isMobile = useMedia('(max-width:767px)');
 
   return (
@@ -18,13 +20,13 @@ const Header = () => {
               <Logo to="/">Event Planner</Logo>
               <CustomSelect data={lang} />
             </Wrapper>
-            <SearchForm />
+            <SearchForm events={events} setFormatList={setFormatList} />
           </>
         ) : (
           <TabletContent>
             <Logo to="/">Event Planner</Logo>
             <Wrapper>
-              <SearchForm />
+              <SearchForm events={events} setFormatList={setFormatList} />
               <CustomSelect data={lang} />
             </Wrapper>
           </TabletContent>
@@ -35,3 +37,8 @@ const Header = () => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  events: PropTypes.array,
+  setFormatList: PropTypes.func,
+};

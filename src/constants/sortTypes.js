@@ -11,12 +11,12 @@ export const sortTypes = [
   },
   {
     id: 3,
-    type: 'by data',
+    type: 'by date',
     icon: 'up',
   },
   {
     id: 4,
-    type: 'by data',
+    type: 'by date',
     icon: 'down',
   },
   {
