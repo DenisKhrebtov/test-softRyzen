@@ -29,6 +29,15 @@ export const StyledCalendar = styled(Calendar)`
         font-size: 14px;
         line-height: 1.43;
       }
+      button svg g path {
+        transition: stroke ${p => p.theme.transition};
+      }
+
+      button:hover svg g path,
+      button:focus svg g path {
+          stroke: ${p => p.theme.accent};
+        }
+      }
     }
   }
 
@@ -71,11 +80,11 @@ export const StyledCalendar = styled(Calendar)`
         padding: 8px;
         height: 36px;
 
-        transition: background-color 300ms ease-in-out;
+        transition: background-color ${p => p.theme.transition};
 
         abbr {
           color: ${p => p.theme.divider};
-          transition: color 300ms ease-in-out;
+          transition: color ${p => p.theme.transition};
         }
 
         &:hover,
@@ -88,7 +97,7 @@ export const StyledCalendar = styled(Calendar)`
         }
       }
     }
-  }
+  
 `;
 
 export const ButtonWrapper = styled.div`
@@ -108,7 +117,7 @@ export const CancelButton = styled.button`
   border: 1px solid ${p => p.theme.accent};
   color: ${p => p.theme.accent};
 
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  transition: background-color ${p => p.theme.transition}, color ${p => p.theme.transition};
 
   &:hover,
   &:focus {
@@ -121,7 +130,7 @@ export const SubmitButton = styled.button`
   background-color: ${p => p.theme.accent};
   color: ${p => p.theme.white};
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   &:hover,
   &:focus {

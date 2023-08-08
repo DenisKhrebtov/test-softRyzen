@@ -4,11 +4,11 @@ import Title from '../components/ui/Title/Title';
 
 const CreateEvent = () => {
   return (
-    <div>
+    <>
       <GoBackLink to="/" />
       <Title>Create new event</Title>
-      <Form />
-    </div>
+      <Form type="Create" />
+    </>
   );
 };
 

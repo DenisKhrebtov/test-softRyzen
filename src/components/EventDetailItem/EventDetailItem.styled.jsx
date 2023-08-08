@@ -66,8 +66,8 @@ export const Tag = styled.li`
   border-radius: 8px;
   background-color: ${p => p.theme.white};
   color: ${p => {
-    if (p.priority) {
-      return p.theme[p.priority];
+    if (p.$priority) {
+      return p.theme[p.$priority];
     }
     return p.theme.accent;
   }};
@@ -103,7 +103,7 @@ export const DeleteButton = styled.button`
 
   border-radius: 4px;
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   &:hover,
   &:focus {
@@ -134,7 +134,7 @@ export const EditLink = styled(Link)`
     width: 55px;
   }
 
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  transition: background-color ${p => p.theme.transition}, color ${p => p.theme.transition};
 
   &:hover,
   &:focus {

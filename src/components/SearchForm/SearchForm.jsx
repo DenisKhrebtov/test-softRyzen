@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types';
 
-import * as SWMIconPack from 'react-swm-icon-pack';
-import { CleanButton, StyledInput } from './SearchForm.styled';
 import { useState } from 'react';
+
+import * as SWMIconPack from 'react-swm-icon-pack';
+
+import { CleanButton, StyledInput } from './SearchForm.styled';
 
 const SearchForm = ({ events, setFormatList }) => {
   const [query, setQuery] = useState('');

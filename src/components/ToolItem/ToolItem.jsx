@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 
+import { useMedia } from 'react-use';
+
 import * as SWMIconPack from 'react-swm-icon-pack';
 
-import { eventCategories } from '../../constants/eventCategories';
-import { sortTypes } from '../../constants/sortTypes';
+import eventCategories from '../../constants/eventCategories';
+import sortTypes from '../../constants/sortTypes';
 
 import { DropDownList, Item, ToolButton } from './ToolItem.styled';
-import { useMedia } from 'react-use';
 
 const ToolItem = ({
   type,
@@ -27,7 +28,8 @@ const ToolItem = ({
         <ToolButton
           type="button"
           onClick={() => setCategoryListIsOpen(prev => !prev)}
-          isOpen={categoryListIsOpen}
+          $padding="small"
+          open={categoryListIsOpen}
         >
           <span>{category ? category : 'Category'}</span>
           {category && !isMobile ? (
@@ -61,11 +63,20 @@ const ToolItem = ({
         <ToolButton
           type="button"
           onClick={() => setSortListIsOpen(prev => !prev)}
-          py="big"
-          isOpen={sortListIsOpen}
+          $padding="big"
+          open={sortListIsOpen}
         >
           <span>Sort {sort ? sort : 'by'}</span>
-          <SWMIconPack.Filters3 set="outline" size={24} color="#3F3F3F" />
+          {sort && !isMobile ? (
+            <SWMIconPack.Cross
+              set="outline"
+              size={24}
+              color="#3F3F3F"
+              onClick={() => selectSortType('')}
+            />
+          ) : (
+            <SWMIconPack.Filters3 set="outline" size={24} color="#3F3F3F" />
+          )}
         </ToolButton>
         {sortListIsOpen && (
           <DropDownList>

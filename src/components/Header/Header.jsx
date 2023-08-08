@@ -2,18 +2,20 @@ import PropTypes from 'prop-types';
 
 import { useMedia } from 'react-use';
 
-import { StyledHeader, Wrapper, Logo, TabletContent } from './Header.styled';
+import lang from '../../constants/languages';
+
 import Container from '../ui/Container/Container';
 import CustomSelect from '../ui/CustomSelect/CustomSelect';
 import SearchForm from '../SearchForm/SearchForm';
-import lang from '../../constants/languages';
+
+import { StyledHeader, Wrapper, Logo, TabletContent } from './Header.styled';
 
 const Header = ({ events, setFormatList }) => {
   const isMobile = useMedia('(max-width:767px)');
 
   return (
     <StyledHeader>
-      <Container>
+      <Container type="header">
         {isMobile ? (
           <>
             <Wrapper>

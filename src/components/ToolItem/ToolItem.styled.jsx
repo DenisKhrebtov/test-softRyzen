@@ -20,22 +20,22 @@ export const ToolButton = styled.button`
   gap: 16px;
   border-radius: 8px;
 
-  min-width: ${p => (p.isOpen ? '158px' : null)};
+  min-width: ${p => (p.open ? '158px' : '')};
 
   @media ${DEVICE.tablet} {
     min-width: 158px;
-    padding: ${p => (p.py ? '16px 24px' : '16px')};
+    padding: ${p => (p.$padding === 'big' ? '16px 24px' : '16px')};
   }
 
   background-color: ${p => p.theme.white};
   box-shadow: ${p => p.theme.boxShadow};
 
-  border-bottom-left-radius: ${p => (p.isOpen ? '0px' : '8px')};
-  border-bottom-right-radius: ${p => (p.isOpen ? '0px' : '8px')};
+  border-bottom-left-radius: ${p => (p.open ? '0px' : '8px')};
+  border-bottom-right-radius: ${p => (p.open ? '0px' : '8px')};
 
   svg g path {
-    transition: stroke 300ms ease-in-out;
-    stroke: ${p => (p.isOpen ? p.theme.accent : p.theme.text)};
+    transition: stroke ${p => p.theme.transition};
+    stroke: ${p => (p.open ? p.theme.accent : p.theme.text)};
   }
 
   &:hover,
@@ -50,13 +50,13 @@ export const ToolButton = styled.button`
   }
 
   span {
-    display: ${p => (p.isOpen ? 'block' : 'none')};
+    display: ${p => (p.open ? 'block' : 'none')};
 
     font-size: 16px;
     font-weight: 500;
-    color: ${p => (p.isOpen ? p.theme.accent : p.theme.text)};
+    color: ${p => (p.open ? p.theme.accent : p.theme.text)};
 
-    transition: color 300ms ease-in-out;
+    transition: color ${p => p.theme.transition};
 
     @media ${DEVICE.tablet} {
       display: block;
@@ -87,7 +87,7 @@ export const DropDownList = styled.ul`
 
     button {
       color: ${p => p.theme.divider};
-      transition: color 300ms ease-in-out;
+      transition: color ${p => p.theme.transition};
       display: block;
       padding: 12px 24px 8px;
       text-align: left;
@@ -98,7 +98,7 @@ export const DropDownList = styled.ul`
 
       svg g path {
         stroke: ${p => p.theme.divider};
-        transition: stroke 300ms ease-in-out;
+        transition: stroke ${p => p.theme.transition};
       }
     }
 

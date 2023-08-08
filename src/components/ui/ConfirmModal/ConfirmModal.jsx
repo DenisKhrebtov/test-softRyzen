@@ -1,6 +1,10 @@
 import PropTypes from 'prop-types';
 
+import { useNavigate } from 'react-router-dom';
+
 import * as SWMIconPack from 'react-swm-icon-pack';
+
+import { deleteEvent } from '../../../api/api';
 
 import {
   BackDrop,
@@ -11,17 +15,13 @@ import {
   RejectButton,
 } from './ConfirmModal.styled';
 
-import { useNavigate } from 'react-router-dom';
-
 const ConfirmModal = ({ text, onClose, eventId }) => {
   const navigate = useNavigate();
 
   const onDelete = async () => {
-    // await deleteEvent(eventId);
+    await deleteEvent(eventId);
 
-    console.log(eventId);
-
-    navigate('/');
+    navigate(`/`, { replace: true });
     onClose(false);
   };
 

@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import { format } from 'date-fns';
+
 import * as SWMIconPack from 'react-swm-icon-pack';
 
 import {
@@ -10,9 +12,10 @@ import {
   SubmitButton,
 } from './Calendar.styled';
 
-const Calendar = ({ onClose, setSelectedDate, selectedDate }) => {
+const Calendar = ({ onClose, setSelectedDate, selectedDate, setDateUTC }) => {
   const handleDateChange = date => {
-    setSelectedDate(date);
+    setDateUTC(date);
+    setSelectedDate('date', format(date, 'dd/MM/yyyy'), false);
   };
 
   return (
@@ -51,4 +54,5 @@ Calendar.propTypes = {
   onClose: PropTypes.func.isRequired,
   setSelectedDate: PropTypes.func.isRequired,
   selectedDate: PropTypes.any.isRequired,
+  setDateUTC: PropTypes.func.isRequired,
 };

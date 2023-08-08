@@ -1,4 +1,4 @@
-export const sortTypes = [
+const sortTypes = [
   {
     id: 1,
     type: 'by A-Z',
@@ -30,3 +30,5 @@ export const sortTypes = [
     icon: 'down',
   },
 ];
+
+export default sortTypes;

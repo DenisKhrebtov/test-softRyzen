@@ -1,204 +1,261 @@
+import PropTypes from 'prop-types';
+
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { Field, Formik } from 'formik';
 import * as SWMIconPack from 'react-swm-icon-pack';
 
-import { format } from 'date-fns';
-
-import { eventCategories } from '../../constants/eventCategories';
+import validationSchema from '../../utils/validationSchema';
+import eventCategories from '../../constants/eventCategories';
 import priorityTypes from '../../constants/priorityTypes';
+
+import CustomTimePicker from '../ui/CustomTimePicker/CustomTimePicker';
 import {
-  StyledForm,
-  InputWrapper,
-  ErrorMessage,
-  DropDownList,
-  ClearButton,
-  ToggleButton,
   AddButton,
+  ClearButton,
+  DropDownList,
+  Error,
+  FormContainer,
+  InputWrapper,
+  StyledForm,
+  ToggleButton,
 } from './Form.styled';
-// import TimePicker from 'react-time-picker';
-import { useState } from 'react';
 
-import Calendar from '../ui/Calendar/Calendar';
+import Calendar from '../Calendar/Calendar';
 
-const Form = () => {
+import { editEvent, postEvent } from '../../api/api';
+
+const Form = ({ event, type }) => {
+  const navigate = useNavigate();
+
+  const [dateUTC, setDateUTC] = useState('');
+
   const [categoryListIsOpen, setCategoryListIsOpen] = useState(false);
   const [priorityListIsOpen, setPriorityListIsOpen] = useState(false);
   const [calendarIsOpen, setCalendarIsOpen] = useState(false);
+  const [timePickerIsOpen, setTimePickerIsOpen] = useState(false);
 
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [selectedPriority, setSelectedPriority] = useState('');
-  const [selectedDate, setSelectedDate] = useState('');
-
-  const onCategory = category => {
-    setSelectedCategory(category);
+  const onCategory = (setCategory, category) => {
+    setCategory('category', category, false);
     setCategoryListIsOpen(false);
   };
 
-  const onPriority = priority => {
-    setSelectedPriority(priority);
+  const onPriority = (setPriority, priority) => {
+    setPriority('priority', priority, false);
     setPriorityListIsOpen(false);
   };
 
+  const handleSubmit = async values => {
+    if (type === 'Create') {
+      const newEvent = { dateUTC, ...values };
+      await postEvent(newEvent);
+      navigate(`/`, { replace: true });
+      return;
+    } else {
+      await editEvent(event.id, values);
+      navigate(`/event/${event.id}`, { replace: true });
+      return;
+    }
+  };
+
   return (
-    <StyledForm>
-      <InputWrapper>
-        <label htmlFor="title">
-          Title
-          <input id="title" name="title" type="text" />
-        </label>
-        <ClearButton type="button">
-          <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
-        </ClearButton>
-        <ErrorMessage>Invalid input</ErrorMessage>
-      </InputWrapper>
-
-      <InputWrapper>
-        <label htmlFor="description">
-          Description
-          <textarea id="description" name="description" type="text" />
-        </label>
-        <ErrorMessage>Invalid input</ErrorMessage>
-      </InputWrapper>
-
-      <div>
-        <label htmlFor="date">Select date</label>
-        <InputWrapper>
-          <input
-            id="date"
-            name="date"
-            type="button"
-            value={selectedDate ? format(selectedDate, 'dd/MM/yyyy') : 'Select'}
-            onClick={() => setCalendarIsOpen(prev => !prev)}
-          />
-
-          <ToggleButton type="button" onClick={() => setCalendarIsOpen(prev => !prev)}>
-            {categoryListIsOpen ? (
-              <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
-            ) : (
-              <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
-            )}
-          </ToggleButton>
-          {calendarIsOpen && (
-            <Calendar
-              onClose={setCalendarIsOpen}
-              setSelectedDate={setSelectedDate}
-              selectedDate={selectedDate}
-            />
-          )}
-        </InputWrapper>
-      </div>
-      <InputWrapper>
-        <label htmlFor="time">
-          Select date
-          <input
-            id="time"
-            name="time"
-            type="time"
-            placeholder="Select time"
-            onChange={e => console.log(e.target.value)}
-          />
-        </label>
-      </InputWrapper>
-
-      <InputWrapper>
-        <label htmlFor="location">
-          Location
-          <input id="location" name="location" type="text" />
-          <ErrorMessage>Invalid input</ErrorMessage>
-        </label>
-      </InputWrapper>
-
-      <div>
-        <label htmlFor="category">Category</label>
-        <InputWrapper color={categoryListIsOpen ? 'accent' : 'text'} type="select">
-          <input
-            id="category"
-            name="category"
-            type="button"
-            value={selectedCategory ? selectedCategory : 'Select'}
-            onClick={() => setCategoryListIsOpen(prev => !prev)}
-          />
-          {selectedCategory ? (
-            <ClearButton type="button" onClick={() => setSelectedCategory('')}>
-              <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
-            </ClearButton>
-          ) : (
-            <ToggleButton type="button" onClick={() => setCategoryListIsOpen(prev => !prev)}>
-              {categoryListIsOpen ? (
-                <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
-              ) : (
-                <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+    <Formik
+      initialValues={{
+        title: event?.title || '',
+        description: event?.description || '',
+        date: event?.dateUTC || 'Select',
+        time: event?.time || 'Select',
+        location: event?.location || '',
+        category: event?.category || 'Select',
+        image: event?.image || 'https://picsum.photos/628/646',
+        priority: event?.priority || 'Select',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={values => handleSubmit(values)}
+    >
+      {({ values, setFieldValue, errors }) => (
+        <StyledForm>
+          <FormContainer>
+            <InputWrapper>
+              <label htmlFor="title">Title</label>
+              <Field id="title" name="title" type="text" />
+              {values.title && (
+                <ClearButton type="button" onClick={() => setFieldValue('title', '', false)}>
+                  <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
+                </ClearButton>
               )}
-            </ToggleButton>
-          )}
 
-          {categoryListIsOpen && (
-            <DropDownList>
-              {eventCategories.map(({ id, category }) => (
-                <li key={id}>
-                  <button type="button" onClick={() => onCategory(category)}>
-                    {category}
-                  </button>
-                </li>
-              ))}
-            </DropDownList>
-          )}
-        </InputWrapper>
-      </div>
-      {/* <select defaultValue="Choose category">
-        <option disabled>Choose category</option>
-        {eventCategories.map(({ id, category }) => (
-          <option key={id} value={category}>
-            {category}
-          </option>
-        ))}
-      </select> */}
+              {errors.title && <Error>Invalid input</Error>}
+            </InputWrapper>
 
-      <InputWrapper>
-        <label htmlFor="image">
-          Add picture
-          <input id="image" name="image" type="file" />
-        </label>
-      </InputWrapper>
+            <InputWrapper>
+              <label htmlFor="description">Description</label>
+              <Field component="textarea" id="description" name="description" type="text" />
+              {values.description && (
+                <ClearButton type="button" onClick={() => setFieldValue('description', '', false)}>
+                  <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
+                </ClearButton>
+              )}
 
-      <div>
-        <label htmlFor="priority">Priority</label>
-        <InputWrapper color={priorityListIsOpen ? 'accent' : 'text'} type="select">
-          <input
-            id="priority"
-            name="priority"
-            type="button"
-            value={selectedPriority ? selectedPriority : 'Select'}
-            onClick={() => setPriorityListIsOpen(prev => !prev)}
-          />
+              {errors.description && <Error>Invalid input</Error>}
+            </InputWrapper>
 
-          <ToggleButton type="button" onClick={() => setPriorityListIsOpen(prev => !prev)}>
-            {priorityListIsOpen ? (
-              <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
-            ) : (
-              <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
-            )}
-          </ToggleButton>
+            <InputWrapper>
+              <label htmlFor="date">Select date</label>
+              <Field
+                id="date"
+                name="date"
+                type="button"
+                onClick={() => setCalendarIsOpen(prev => !prev)}
+              />
 
-          {priorityListIsOpen && (
-            <DropDownList>
-              {priorityTypes.map(priority => (
-                <li key={priority}>
-                  <button type="button" onClick={() => onPriority(priority)}>
-                    {priority}
-                  </button>
-                </li>
-              ))}
-            </DropDownList>
-          )}
-        </InputWrapper>
-      </div>
-      {/* <TimePicker
-        format="h:mm a" // Формат "часы:минуты a.m./p.m."
-        clearIcon={null} // Убираем иконку для очистки значения
-        value="12:00 AM"
-      /> */}
-      <AddButton type="button">Add event</AddButton>
-    </StyledForm>
+              <ToggleButton type="button" onClick={() => setCalendarIsOpen(prev => !prev)}>
+                {calendarIsOpen ? (
+                  <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
+                ) : (
+                  <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+                )}
+              </ToggleButton>
+              {calendarIsOpen && (
+                <Calendar
+                  onClose={setCalendarIsOpen}
+                  setSelectedDate={setFieldValue}
+                  selectedDate={values.date === 'Select' ? '' : values.date}
+                  setDateUTC={setDateUTC}
+                />
+              )}
+              {errors.date && <Error>Invalid input</Error>}
+            </InputWrapper>
+
+            <InputWrapper>
+              <label htmlFor="time">Select time</label>
+              <Field
+                id="time"
+                name="time"
+                type="button"
+                onClick={() => setTimePickerIsOpen(prev => !prev)}
+              />
+              <ToggleButton type="button" onClick={() => setTimePickerIsOpen(prev => !prev)}>
+                {timePickerIsOpen ? (
+                  <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
+                ) : (
+                  <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+                )}
+              </ToggleButton>
+
+              {timePickerIsOpen && (
+                <CustomTimePicker
+                  setSelectedTime={setFieldValue}
+                  selectedTime={values.time}
+                  onClose={setTimePickerIsOpen}
+                />
+              )}
+              {errors.time && <Error>Invalid input</Error>}
+            </InputWrapper>
+
+            <InputWrapper>
+              <label htmlFor="location">Location</label>
+
+              <Field id="location" name="location" type="text" />
+              {values.location && (
+                <ClearButton type="button" onClick={() => setFieldValue('location', '', false)}>
+                  <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
+                </ClearButton>
+              )}
+              {errors.location && <Error>Invalid input</Error>}
+            </InputWrapper>
+
+            <div>
+              <InputWrapper color={categoryListIsOpen ? 'accent' : 'text'} type="select">
+                <label htmlFor="category">Category</label>
+
+                <Field
+                  id="category"
+                  name="category"
+                  type="button"
+                  onClick={() => setCategoryListIsOpen(prev => !prev)}
+                />
+
+                <ToggleButton type="button" onClick={() => setCategoryListIsOpen(prev => !prev)}>
+                  {categoryListIsOpen ? (
+                    <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
+                  ) : (
+                    <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+                  )}
+                </ToggleButton>
+
+                {errors.category && <Error>Invalid input</Error>}
+
+                {categoryListIsOpen && (
+                  <DropDownList>
+                    {eventCategories.map(({ id, category }) => (
+                      <li key={id}>
+                        <button type="button" onClick={() => onCategory(setFieldValue, category)}>
+                          {category}
+                        </button>
+                      </li>
+                    ))}
+                  </DropDownList>
+                )}
+              </InputWrapper>
+            </div>
+
+            <InputWrapper>
+              <label htmlFor="image">Add picture</label>
+
+              <Field id="image" name="image" type="text" title="put your link here" />
+              {values.image && (
+                <ClearButton type="button" onClick={() => setFieldValue('image', '', false)}>
+                  <SWMIconPack.CrossSmall set="outline" size={24} color="#7B61FF" />
+                </ClearButton>
+              )}
+              {errors.image && <Error>Invalid input</Error>}
+            </InputWrapper>
+
+            <div>
+              <InputWrapper color={priorityListIsOpen ? 'accent' : 'text'} type="select">
+                <label htmlFor="priority">Priority</label>
+                <Field
+                  id="priority"
+                  name="priority"
+                  type="button"
+                  onClick={() => setPriorityListIsOpen(prev => !prev)}
+                />
+
+                <ToggleButton type="button" onClick={() => setPriorityListIsOpen(prev => !prev)}>
+                  {priorityListIsOpen ? (
+                    <SWMIconPack.ChevronSmallUp set="outline" size={24} color="#7B61FF" />
+                  ) : (
+                    <SWMIconPack.ChevronSmallDown set="outline" size={24} color="#7B61FF" />
+                  )}
+                </ToggleButton>
+
+                {priorityListIsOpen && (
+                  <DropDownList>
+                    {priorityTypes.map(priority => (
+                      <li key={priority}>
+                        <button type="button" onClick={() => onPriority(setFieldValue, priority)}>
+                          {priority}
+                        </button>
+                      </li>
+                    ))}
+                  </DropDownList>
+                )}
+                {errors.priority && <Error>Invalid input</Error>}
+              </InputWrapper>
+            </div>
+          </FormContainer>
+          <AddButton type="submit">{`${type} event`}</AddButton>
+        </StyledForm>
+      )}
+    </Formik>
   );
 };
 
 export default Form;
+
+Form.propTypes = {
+  type: PropTypes.string.isRequired,
+  event: PropTypes.object,
+};

@@ -21,7 +21,7 @@ const EditEvent = () => {
 
       <Title>Edit event</Title>
 
-      {event ? <Form /> : <p>Loading...</p>}
+      {event ? <Form event={event} type="Edit" /> : <p>Loading...</p>}
     </>
   );
 };

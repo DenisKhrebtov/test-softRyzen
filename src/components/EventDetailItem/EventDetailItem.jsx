@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 
 import { useState } from 'react';
 
+import dummy from '/images/dummyL.png';
+
 import ConfirmModal from '../ui/ConfirmModal/ConfirmModal';
 
 import {
@@ -15,7 +17,17 @@ import {
   Tag,
 } from './EventDetailItem.styled';
 
-const EventDetailItem = ({ id, title, description, category, priority, location, date, time }) => {
+const EventDetailItem = ({
+  id,
+  title,
+  image,
+  description,
+  category,
+  priority,
+  location,
+  date,
+  time,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onDelete = async () => {
@@ -25,16 +37,16 @@ const EventDetailItem = ({ id, title, description, category, priority, location,
   return (
     <Item>
       <ImageWrapper>
-        <img src="/images/dummy.jpg" alt="photo" />
+        <img src={image ? image : dummy} alt={title} />
       </ImageWrapper>
       <InfoWrapper>
         <p>{description}</p>
         <TagList>
           <Tag>{category}</Tag>
-          <Tag priority={priority.toLowerCase()}>{priority}</Tag>
+          <Tag $priority={priority.toLowerCase()}>{priority}</Tag>
           <Tag>{location}</Tag>
           <Tag>
-            {date} at {time} am
+            {date.replaceAll('/', '.')} at {time}
           </Tag>
         </TagList>
         <ButtonWrapper>
@@ -58,6 +70,7 @@ export default EventDetailItem;
 EventDetailItem.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
+  image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   priority: PropTypes.string.isRequired,

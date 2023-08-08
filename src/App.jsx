@@ -5,8 +5,8 @@ import { Suspense, lazy, useState } from 'react';
 
 const Home = lazy(() => import('./pages/Home/Home'));
 const CreateEvent = lazy(() => import('./pages/CreateEvent'));
-const EventDetail = lazy(() => import('./pages/EventDetail.jsx'));
-const EditEvent = lazy(() => import('./pages/EditEvent.jsx'));
+const EventDetail = lazy(() => import('./pages/EventDetail/EventDetail'));
+const EditEvent = lazy(() => import('./pages/EditEvent'));
 
 const App = () => {
   const [events, setEvents] = useState(null);

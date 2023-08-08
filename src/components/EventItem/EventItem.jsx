@@ -1,6 +1,9 @@
 import PropTypes from 'prop-types';
 
 import SubTitle from '../ui/SubTitle/SubTitle';
+
+import dummy from '/images/dummyS.png';
+
 import {
   Item,
   ImageWrapper,
@@ -12,24 +15,27 @@ import {
 } from './EventItem.styled';
 
 const EventItem = ({ id, title, location, description, date, time, image, priority, category }) => {
+  const normalizeDescription = description =>
+    description.length > 100 ? description.slice(0, 99) + '...' : description;
+
   return (
     <Item>
       <ImageWrapper>
         <TagsWrapper>
           <Tag>{category}</Tag>
-          <Tag priority={priority.toLowerCase()}>{priority}</Tag>
+          <Tag $priority={priority.toLowerCase()}>{priority}</Tag>
         </TagsWrapper>
-        <img src={image} alt={title} />
+        <img src={image ? image : dummy} alt={title} />
         <Overlay>
           <span>
-            {date} at {time}
+            {date.slice(0, 5).replaceAll('/', '.')} at {time}
           </span>
           <span>{location}</span>
         </Overlay>
       </ImageWrapper>
       <InfoWrapper>
         <SubTitle>{title}</SubTitle>
-        <p>{description}</p>
+        <p>{normalizeDescription(description)}</p>
 
         <ReadMoreLink to={`event/${id}`}>More info</ReadMoreLink>
       </InfoWrapper>

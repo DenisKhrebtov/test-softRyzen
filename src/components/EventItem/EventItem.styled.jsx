@@ -11,7 +11,7 @@ export const InfoWrapper = styled.div`
   flex-direction: column;
   gap: 16px;
 
-  transition: transform 300ms ease-in-out;
+  transition: transform ${p => p.theme.transition};
 
   p {
     font-size: 14px;
@@ -32,7 +32,7 @@ export const Overlay = styled.div`
   display: flex;
   justify-content: space-between;
 
-  transition: transform 300ms ease-in-out;
+  transition: transform ${p => p.theme.transition};
 
   span {
     color: ${p => p.theme.accent};
@@ -54,7 +54,7 @@ export const ReadMoreLink = styled(Link)`
   font-size: 14px;
   line-height: 1.43;
 
-  transition: opacity 300ms ease-in-out, visibility 400ms ease-in-out;
+  transition: opacity ${p => p.theme.transition}, visibility 400ms ease-in-out;
 
   &:hover,
   &:focus {
@@ -115,8 +115,8 @@ export const Tag = styled.span`
   color: ${p => p.theme.accent};
 
   color: ${p => {
-    if (p.priority) {
-      return p.theme[p.priority];
+    if (p.$priority) {
+      return p.theme[p.$priority];
     }
     return p.theme.accent;
   }};

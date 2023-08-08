@@ -10,7 +10,7 @@ export const StyledBackLink = styled(Link)`
   color: ${p => p.theme.accent};
   font-size: 14px;
   font-weight: 500;
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   margin-bottom: 24px;
 

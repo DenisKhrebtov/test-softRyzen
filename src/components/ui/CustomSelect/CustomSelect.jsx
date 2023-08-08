@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import * as SWMIconPack from 'react-swm-icon-pack';
 
 import PropTypes from 'prop-types';
@@ -15,9 +16,9 @@ const CustomSelect = ({ data }) => {
   };
 
   return (
-    <LangSelect>
+    <LangSelect open={isOpen}>
       <p>{currentLang.label}</p>
-      <ChevronBtn type="button" onClick={() => setIsOpen(prev => !prev)} isOpen={isOpen}>
+      <ChevronBtn type="button" onClick={() => setIsOpen(prev => !prev)}>
         <SWMIconPack.ChevronSmallDown set="outline" size={24} />
       </ChevronBtn>
       {isOpen && (

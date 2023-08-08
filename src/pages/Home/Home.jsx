@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useMedia } from 'react-use';
 
 import { fetchEvents } from '../../api/api';
@@ -15,28 +15,39 @@ import Title from '../../components/ui/Title/Title';
 import { Wrapper } from './Home.styled';
 
 const Home = ({ events, setEvents, formatList, setFormatList }) => {
+  const [sort, setSort] = useState('');
+  const [icon, setIcon] = useState('');
   const isMobile = useMedia('(max-width:767px)');
   const isTablet = useMedia('(max-width:1279px)');
   const isDesktop = useMedia('(min-width:1280px)');
 
   useEffect(() => {
-    if (!events?.length) {
-      fetchEvents().then(data => {
-        setEvents(data);
-        setFormatList(data);
-      });
-    }
-  }, [events, setEvents, setFormatList]);
+    fetchEvents().then(data => {
+      setEvents(data);
+      setFormatList(data);
+    });
+  }, [setEvents, setFormatList]);
 
-  const getCategory = selectedCategory => {
-    const filteredEvents = filterByCategory(selectedCategory, events);
-    setFormatList(filteredEvents);
+  const getSortType = (selectedType, icon, array = formatList) => {
+    if (selectedType === '') {
+      const sortedEvents = sortList(selectedType, icon, events);
+      setFormatList(sortedEvents);
+    } else {
+      const sortedEvents = sortList(selectedType, icon, array);
+      setFormatList(sortedEvents);
+    }
+    setSort(selectedType);
+    setIcon(icon);
   };
 
-  const getSortType = (selectedType, icon) => {
-    const sortedEvents = sortList(selectedType, icon, events);
-    console.log(sortedEvents);
-    setFormatList(sortedEvents);
+  const getCategory = selectedCategory => {
+    if (selectedCategory === '' && sort) {
+      getSortType(sort, icon, events);
+      return;
+    }
+
+    const filteredEvents = filterByCategory(selectedCategory, events);
+    setFormatList(filteredEvents);
   };
 
   return (

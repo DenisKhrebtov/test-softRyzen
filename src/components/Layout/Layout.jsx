@@ -1,8 +1,13 @@
 import PropTypes from 'prop-types';
 
 import { Outlet } from 'react-router-dom';
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import Header from '../Header/Header';
 import Container from '../ui/Container/Container';
+
 import { Background } from './Layout.styled';
 
 const Layout = ({ events, setFormatList }) => {
@@ -10,9 +15,10 @@ const Layout = ({ events, setFormatList }) => {
     <>
       <Header events={events} setFormatList={setFormatList} />
       <Background>
-        <Container paddingTop="true" paddingBottom="true" height="100%">
+        <Container type="container" height="100%">
           <Outlet />
         </Container>
+        <ToastContainer />
       </Background>
     </>
   );

@@ -25,7 +25,7 @@ export const CreateLink = styled(Link)`
   gap: 16px;
   border-radius: 8px;
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   &:hover,
   &:focus {

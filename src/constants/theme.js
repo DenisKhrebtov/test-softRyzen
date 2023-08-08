@@ -9,6 +9,7 @@ const theme = {
   boxShadow: '2px 4px 9px 0px rgba(166, 141, 174, 0.28)',
   labelShadow: '4px 5px 9px 0px rgba(166, 141, 174, 0.28)',
   description: '#49454F',
+  transition: '300ms ease-in-out',
 };
 
 export default theme;

@@ -1,15 +1,13 @@
-import { styled } from 'styled-components';
-import EventDetailItem from '../components/EventDetailItem/EventDetailItem';
-import GoBackLink from '../components/GoBackLink/GoBackLink';
-import Title from '../components/ui/Title/Title';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getEventById } from '../api/api';
+import { useParams } from 'react-router-dom';
 
-export const Wrapper = styled.div`
-  margin: 0 auto;
-  width: fit-content;
-`;
+import { getEventById } from '../../api/api';
+
+import EventDetailItem from '../../components/EventDetailItem/EventDetailItem';
+import GoBackLink from '../../components/GoBackLink/GoBackLink';
+import Title from '../../components/ui/Title/Title';
+
+import { Wrapper } from './EventDetail.styled';
 
 const EventDetail = () => {
   const { eventId } = useParams();
@@ -29,6 +27,7 @@ const EventDetail = () => {
           <EventDetailItem
             id={event.id}
             title={event.title}
+            image={event.image}
             description={event.description}
             date={event.date}
             time={event.time}

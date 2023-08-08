@@ -1,4 +1,4 @@
-export const eventCategories = [
+const eventCategories = [
   {
     id: 1,
     category: 'Art',
@@ -28,3 +28,5 @@ export const eventCategories = [
     category: 'Sport',
   },
 ];
+
+export default eventCategories;

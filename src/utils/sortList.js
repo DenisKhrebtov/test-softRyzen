@@ -1,8 +1,6 @@
 export const sortList = (type, icon, array) => {
   let sortedArray = [];
 
-  console.log(array);
-
   if (type === 'by A-Z' || type === 'by Z-A') {
     icon === 'up'
       ? (sortedArray = [...array].sort((a, b) => a.title.localeCompare(b.title)))
@@ -20,11 +18,8 @@ export const sortList = (type, icon, array) => {
 
   if (type === 'by date') {
     const compareDatesAndTimes = (eventA, eventB) => {
-      const dateTimeA = new Date(`${eventA.date} ${eventA.time}`);
-      const dateTimeB = new Date(`${eventB.date} ${eventB.time}`);
-
-      console.log(dateTimeA);
-      // console.log(dateTimeA - dateTimeB);
+      const dateTimeA = new Date(eventA.dateUTC);
+      const dateTimeB = new Date(eventB.dateUTC);
 
       return icon === 'down' ? dateTimeA - dateTimeB : dateTimeB - dateTimeA;
     };
@@ -32,5 +27,5 @@ export const sortList = (type, icon, array) => {
     sortedArray = [...array].sort(compareDatesAndTimes);
   }
 
-  return sortedArray;
+  return sortedArray.length ? sortedArray : array;
 };

@@ -39,7 +39,7 @@ export const CloseBtn = styled.button`
 
   opacity: 0.7;
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   &:hover,
   &:focus {
@@ -76,7 +76,7 @@ export const ConfirmButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
   width: 108px;
-  transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  transition: background-color ${p => p.theme.transition}, color ${p => p.theme.transition};
 
   &:hover,
   &:focus {
@@ -98,7 +98,7 @@ export const RejectButton = styled.button`
   padding: 8px 16px;
   border-radius: 4px;
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   &:hover,
   &:focus {

@@ -21,10 +21,9 @@ export const LangSelect = styled.div`
 export const ChevronBtn = styled.button`
   padding: 0;
   display: flex;
-  transform: ${p => (p.isOpen ? 'rotate(180deg)' : null)};
-
+  transform: ${p => (p.open ? 'rotate(180deg)' : null)};
   svg g path {
-    stroke: ${p => (p.isOpen ? p.theme.accent : p.theme.text)};
+    stroke: ${p => (p.open ? p.theme.accent : p.theme.text)};
   }
 `;
 
@@ -54,7 +53,7 @@ export const DropDownList = styled.ul`
       font-weight: 500;
 
       color: ${p => p.theme.divider};
-      transition: color 300ms ease-in-out;
+      transition: color ${p => p.theme.transition};
 
       &:hover,
       &:focus {

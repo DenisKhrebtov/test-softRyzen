@@ -1,8 +1,10 @@
+import { Form } from 'formik';
+
 import { styled } from 'styled-components';
 import DEVICE from '../../constants/mediaSizes';
 import theme from '../../constants/theme';
 
-export const StyledForm = styled.form`
+export const StyledForm = styled(Form)`
   background-color: ${p => p.theme.white};
   border-radius: 8px;
   box-shadow: ${p => p.theme.boxShadow};
@@ -11,25 +13,12 @@ export const StyledForm = styled.form`
 
   margin-top: 24px;
 
-  display: flex;
-  flex-direction: column;
-
   @media ${DEVICE.tablet} {
     padding: 40px 24px;
-
-    height: 656px;
-
-    flex-wrap: wrap;
-
-    row-gap: 24px;
-    column-gap: 20px;
-
-    & > div {
-      width: 50%;
-    }
   }
 
   @media ${DEVICE.desktop} {
+    padding: 40px;
   }
 
   & label {
@@ -37,6 +26,30 @@ export const StyledForm = styled.form`
     margin-bottom: 8px;
     font-size: 16px;
     letter-spacing: 0.4px;
+  }
+`;
+
+export const FormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media ${DEVICE.tablet} {
+    display: flex;
+    flex-flow: column wrap;
+    height: 510px;
+    align-items: center;
+
+    & > div {
+      width: 308px;
+    }
+  }
+
+  @media ${DEVICE.desktop} {
+    height: 308px;
+
+    & > div {
+      width: 372px;
+    }
   }
 `;
 
@@ -55,13 +68,14 @@ export const InputWrapper = styled.div`
     outline: none;
 
     font-size: 16px;
+    font-family: inherit;
     line-height: 1.33;
     color: ${p => (p.color ? p.theme[p.color] : p.theme.text)};
 
     background-color: ${p => p.theme.white};
     text-align: left;
 
-    cursor: ${p => (p.type === 'select' ? 'pointer' : 'rosshair')};
+    cursor: ${p => (p.type === 'select' ? 'pointer' : 'crosshair')};
   }
 
   textarea {
@@ -79,11 +93,11 @@ export const ClearButton = styled.button`
 
 export const ToggleButton = styled.button`
   position: absolute;
-  top: 16px;
+  top: 40px;
   right: 12px;
 `;
 
-export const ErrorMessage = styled.p`
+export const Error = styled.p`
   position: absolute;
   bottom: 0;
   right: 19px;
@@ -105,8 +119,6 @@ export const DropDownList = styled.ul`
 
   @media ${DEVICE.tablet} {
     position: absolute;
-    /* top: 0;
-    left: 0; */
     width: 100%;
     z-index: 1;
   }
@@ -126,7 +138,7 @@ export const DropDownList = styled.ul`
       line-height: 1.33;
       color: ${p => p.theme.text};
 
-      transition: color 300ms ease-in-out;
+      transition: color ${p => p.theme.transition};
 
       &:hover,
       &:focus {
@@ -153,12 +165,18 @@ export const AddButton = styled.button`
 
   box-shadow: ${p => p.theme.boxShadow};
 
-  transition: opacity 300ms ease-in-out;
+  transition: opacity ${p => p.theme.transition};
 
   @media ${DEVICE.tablet} {
     width: 193px;
-    margin-top: 120px;
+    margin-top: 20px;
     margin-left: auto;
+    margin-right: 7px;
+  }
+
+  @media ${DEVICE.desktop} {
+    margin-top: 60px;
+    margin-right: 14px;
   }
 
   &:hover,
